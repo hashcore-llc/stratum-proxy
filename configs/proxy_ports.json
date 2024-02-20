@@ -1,0 +1,18 @@
+[
+    {
+      "bind_port": 4042,
+      "pool": {
+        "url": "btc.viabtc.io:3333",
+        "user": "ahxx.farm4042",
+        "pass": "x"
+      }
+    },
+    {
+      "bind_port": 4043,
+      "pool": {
+        "url": "btc.viabtc.io:3333",
+        "user": "ahxx.farm4043",
+        "pass": "x"
+      }
+    }
+  ]
