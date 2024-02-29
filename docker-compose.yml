@@ -1,4 +1,5 @@
 version: '3.8'
+name: anthill-farm-proxy
 
 volumes:
   prometheus_data: {}
