@@ -1,5 +1,5 @@
 version: '3.8'
-name: anthill-farm-proxy
+name: 'anthill-farm-proxy'
 
 volumes:
   prometheus_data: {}
@@ -8,6 +8,7 @@ volumes:
 services:
   prometheus:
     image: prom/prometheus
+    container_name: anthill-prometheus
     restart: always
     volumes:
       - ./monitoring/prometheus:/etc/prometheus/
@@ -27,6 +28,7 @@ services:
 
   node-exporter:
     image: prom/node-exporter
+    container_name: anthill-node-exporter
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -44,6 +46,7 @@ services:
 
   alertmanager:
     image: prom/alertmanager
+    container_name: anthill-alertmanager
     restart: always
     ports:
       - 9093:9093
@@ -55,6 +58,7 @@ services:
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor
+    container_name: anthill-cadvisor
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -68,6 +72,7 @@ services:
 
   grafana:
     image: grafana/grafana
+    container_name: anthill-grafana
     restart: always
     environment:
       GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
@@ -84,6 +89,7 @@ services:
 
   farm-proxy:
     image: public.ecr.aws/k7t2c2k4/farm-proxy:stg
+    container_name: anthill-farm-proxy
     restart: always
     volumes:
       - ./configs:/opt/farm-proxy/configs
