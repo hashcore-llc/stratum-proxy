@@ -1,6 +1,0 @@
-{
-    "log_level": "info",
-    "mining_algorithm": "sha256",
-    "bind_api_addr": "0.0.0.0:4050",
-    "log_dir": "./configs/log"
-  }
