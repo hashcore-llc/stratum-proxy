@@ -1,13 +1,13 @@
 - bind_port: 4042
   submission_rate: 0.2
-  mining_algorithm: sha256d
+  mining_algorithm: scrypt
   pool:
     url: btc.viabtc.io:3333
     user: ahxx.farm4042
     pass: x
 - bind_port: 4043
   submission_rate: 0.2
-  mining_algorithm: scrypt
+  mining_algorithm: sha256d
   pool:
     url: btc.viabtc.io:3333
     user: ahxx.farm4043
