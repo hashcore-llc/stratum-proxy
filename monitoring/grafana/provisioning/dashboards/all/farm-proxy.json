@@ -18,23 +18,10 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 8,
   "links": [],
   "liveNow": false,
   "panels": [
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 17,
-      "panels": [],
-      "title": "General",
-      "type": "row"
-    },
     {
       "datasource": {
         "type": "prometheus",
@@ -64,7 +51,7 @@
         "h": 4,
         "w": 6,
         "x": 0,
-        "y": 1
+        "y": 0
       },
       "id": 1,
       "options": {
@@ -98,7 +85,7 @@
           "refId": "A"
         }
       ],
-      "title": "uptime",
+      "title": "Uptime",
       "type": "stat"
     },
     {
@@ -133,7 +120,7 @@
         "h": 4,
         "w": 6,
         "x": 6,
-        "y": 1
+        "y": 0
       },
       "id": 3,
       "options": {
@@ -203,7 +190,7 @@
         "h": 4,
         "w": 6,
         "x": 12,
-        "y": 1
+        "y": 0
       },
       "id": 4,
       "options": {
@@ -278,7 +265,7 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 1
+        "y": 0
       },
       "id": 5,
       "options": {
@@ -315,29 +302,15 @@
       "type": "gauge"
     },
     {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 5
-      },
-      "id": 6,
-      "panels": [],
-      "title": "Farm-proxy metrics, port 4042",
-      "type": "row"
-    },
-    {
       "datasource": {
         "type": "prometheus",
-        "uid": ""
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "displayName": "Connection count, upstream, config 4042",
           "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
@@ -356,7 +329,7 @@
         "h": 2,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 4
       },
       "id": 9,
       "options": {
@@ -366,7 +339,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
@@ -384,26 +357,28 @@
             "uid": ""
           },
           "editorMode": "code",
-          "expr": "conn_count {stream=\"upstream\", port=\"4042\"}",
+          "exemplar": false,
+          "expr": "conn_count {stream=\"upstream\", port=~\"$port\" }",
+          "format": "heatmap",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{ port }}",
           "range": true,
           "refId": "A"
         }
       ],
+      "title": "Upstream connection on config",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": ""
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "displayName": "Connection count, downstream, config 4042",
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -421,7 +396,7 @@
         "h": 2,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 4
       },
       "id": 10,
       "options": {
@@ -448,13 +423,15 @@
             "uid": ""
           },
           "editorMode": "code",
-          "expr": "conn_count {stream=\"downstream\", port=\"4042\"}",
+          "expr": "conn_count {stream=\"downstream\", port=~\"$port\"}",
+          "format": "heatmap",
           "instant": false,
-          "legendFormat": "__auto",
+          "legendFormat": "{{ port }}",
           "range": true,
           "refId": "A"
         }
       ],
+      "title": "Downstream connection on config",
       "type": "stat"
     },
     {
@@ -515,10 +492,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 6
       },
       "id": 7,
       "options": {
@@ -531,7 +508,9 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Name",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -545,9 +524,11 @@
             "uid": ""
           },
           "editorMode": "code",
-          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\",port=\"4042\"}[5m])) by (instance)",
+          "exemplar": false,
+          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\",port=~\"$port\"}[5m])) by (instance, port)",
+          "format": "heatmap",
           "instant": false,
-          "legendFormat": "HR 5m, {{port}}",
+          "legendFormat": "HR 5m, {{ port }}",
           "range": true,
           "refId": "A"
         },
@@ -557,15 +538,30 @@
             "uid": ""
           },
           "editorMode": "code",
-          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\",port=\"4042\"}[1h])) by (instance)",
+          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\",port=~\"$port\"}[1h])) by (instance, port)",
+          "format": "heatmap",
           "hide": false,
           "instant": false,
-          "legendFormat": "HR 1h, {{port}}",
+          "legendFormat": "HR 1h, {{ port }}",
           "range": true,
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\",port=~\"$port\"}[1d])) by (instance, port)",
+          "format": "heatmap",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "HR 1d, {{ port }}",
+          "range": true,
+          "refId": "D"
         }
       ],
-      "title": "HR upstream, port-4042",
+      "title": "HR upstream",
       "type": "timeseries"
     },
     {
@@ -626,12 +622,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 6
       },
-      "id": 8,
+      "id": 34,
       "options": {
         "legend": {
           "calcs": [
@@ -642,7 +638,9 @@
           ],
           "displayMode": "table",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": true,
+          "sortBy": "Name",
+          "sortDesc": true
         },
         "tooltip": {
           "mode": "single",
@@ -656,9 +654,11 @@
             "uid": ""
           },
           "editorMode": "code",
-          "expr": "sum(avg_over_time(hr_1min{stream=\"downstream\",port=\"4042\"}[5m])) by (instance)",
+          "exemplar": false,
+          "expr": "sum(avg_over_time(hr_1min{stream=\"downstream\",port=~\"$port\"}[5m])) by (instance, port)",
+          "format": "heatmap",
           "instant": false,
-          "legendFormat": "HR 5m, {{port}}",
+          "legendFormat": "HR 5m, {{ port }}",
           "range": true,
           "refId": "A"
         },
@@ -668,15 +668,30 @@
             "uid": ""
           },
           "editorMode": "code",
-          "expr": "sum(avg_over_time(hr_1min{stream=\"downstream\", port=\"4042\"}[1h])) by (instance)",
+          "expr": "sum(avg_over_time(hr_1min{stream=\"downstream\",port=~\"$port\"}[1h])) by (instance, port)",
+          "format": "heatmap",
           "hide": false,
           "instant": false,
-          "legendFormat": "HR 1h, {{port}}",
+          "legendFormat": "HR 1h, {{ port }}",
           "range": true,
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(avg_over_time(hr_1min{stream=\"downstream\",port=~\"$port\"}[1d])) by (instance, port)",
+          "format": "heatmap",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "HR 1d, {{ port }}",
+          "range": true,
+          "refId": "D"
         }
       ],
-      "title": "HR downstream, port-4042",
+      "title": "HR downstream",
       "type": "timeseries"
     },
     {
@@ -734,40 +749,15 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "accepted {stream=\"upstream\", port=\"4042\"} / (accepted{stream=\"upstream\", port=\"4042\"} + rejected{stream=\"upstream\", port=\"4042\"} + stale{stream=\"upstream\",port=\"4042\"})",
+          "expr": "accepted {stream=\"upstream\", port=~\"$port\"} / accepted{stream=\"upstream\", port=~\"$port\"} + rejected{stream=\"upstream\", port=~\"$port\"} + stale{stream=\"upstream\",port=~\"$port\"} ",
+          "format": "heatmap",
           "instant": false,
-          "legendFormat": "Accepted",
+          "legendFormat": "Accepted, {{ port }}",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "rejected {stream=\"upstream\", port=\"4042\"} / (accepted{stream=\"upstream\", port=\"4042\"} + rejected{stream=\"upstream\", port=\"4042\"} + stale{stream=\"upstream\",port=\"4042\"})",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "Rejected",
-          "range": true,
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "stale {stream=\"upstream\", port=\"4042\"} / (accepted{stream=\"upstream\", port=\"4042\"} + rejected{stream=\"upstream\", port=\"4042\"} + stale{stream=\"upstream\",port=\"4042\"})",
-          "hide": false,
-          "instant": false,
-          "legendFormat": "Stale",
-          "range": true,
-          "refId": "C"
         }
       ],
-      "title": "Upstream, config 4042",
+      "title": "Upstream, accepted",
       "type": "stat"
     },
     {
@@ -825,40 +815,280 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "accepted {stream=\"downstream\", port=\"4042\"} / (accepted{stream=\"downstream\", port=\"4042\"} + rejected{stream=\"downstream\", port=\"4042\"} + stale{stream=\"downstream\",port=\"4042\"})",
+          "expr": "accepted {stream=\"downstream\", port=~\"$port\"} / (accepted{stream=\"downstream\", port=~\"$port\"} + rejected{stream=\"downstream\", port=~\"$port\"} + stale{stream=\"downstream\",port=~\"$port\"})",
+          "format": "heatmap",
           "instant": false,
-          "legendFormat": "Accepted",
+          "legendFormat": "Accepted, {{ port }}",
           "range": true,
           "refId": "A"
+        }
+      ],
+      "title": "Downstream, accepted",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#00f2ff",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percentunit"
         },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 0,
+        "y": 19
+      },
+      "id": 29,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "rejected {stream=\"downstream\", port=\"4042\"} / (accepted{stream=\"downstream\", port=\"4042\"} + rejected{stream=\"downstream\", port=\"4042\"} + stale{stream=\"downstream\",port=\"4042\"})",
+          "expr": "rejected {stream=\"upstream\", port=~\"$port\"} / accepted{stream=\"upstream\", port=~\"$port\"} + rejected{stream=\"upstream\", port=~\"$port\"} + stale{stream=\"upstream\",port=~\"$port\"}",
           "hide": false,
           "instant": false,
-          "legendFormat": "Rejected",
+          "legendFormat": "Rejected, {{ port }}",
           "range": true,
           "refId": "B"
+        }
+      ],
+      "title": "Upstream, rejected",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#00f2ff",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percentunit"
         },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      },
+      "id": 31,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "stale {stream=\"downstream\", port=\"4042\"} / (accepted{stream=\"downstream\", port=\"4042\"} + rejected{stream=\"downstream\", port=\"4042\"} + stale{stream=\"downstream\",port=\"4042\"})",
+          "expr": "rejected {stream=\"downstream\", port=~\"$port\"} / (accepted{stream=\"downstream\", port=~\"$port\"} + rejected{stream=\"downstream\", port=~\"$port\"} + stale{stream=\"downstream\",port=~\"$port\"})",
+          "format": "heatmap",
           "hide": false,
           "instant": false,
-          "legendFormat": "Stale",
+          "legendFormat": "Rejected, {{ port }}",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Downstream, rejected",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#00f2ff",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 0,
+        "y": 22
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "stale {stream=\"upstream\", port=~\"$port\"} / accepted{stream=\"upstream\", port=~\"$port\"} + rejected{stream=\"upstream\", port=~\"$port\"} + stale{stream=\"upstream\",port=~\"$port\"}",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Stale, {{ port }}",
           "range": true,
           "refId": "C"
         }
       ],
-      "title": "Downstream, config 4042",
+      "title": "Upstream, stale",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#00f2ff",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 22
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "stale {stream=\"downstream\", port=~\"$port\"} / (accepted{stream=\"downstream\", port=~\"$port\"} + rejected{stream=\"downstream\", port=~\"$port\"} + stale{stream=\"downstream\",port=~\"$port\"})",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Stale, {{ port }}",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "Downstream, stale",
       "type": "stat"
     },
     {
@@ -921,7 +1151,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 19
+        "y": 25
       },
       "id": 27,
       "options": {
@@ -945,9 +1175,10 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "increase(accepted{stream=\"upstream\",port=\"4042\"}[1m])",
+          "expr": "increase(accepted{stream=\"upstream\",port=~\"$port\"}[1m])",
+          "format": "heatmap",
           "instant": false,
-          "legendFormat": "accepted",
+          "legendFormat": "accepted, {{ port }}",
           "range": true,
           "refId": "A"
         },
@@ -957,10 +1188,11 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "irate(rejected{stream=\"downstream\",port=\"4042\"}[1m])",
+          "expr": "increase(rejected{stream=\"upstream\",port=~\"$port\"}[1m])",
+          "format": "heatmap",
           "hide": false,
           "instant": false,
-          "legendFormat": "rejected",
+          "legendFormat": "rejected, {{ port }}",
           "range": true,
           "refId": "B"
         },
@@ -970,15 +1202,16 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "irate(stale{stream=\"downstream\",port=\"4042\"}[1m])",
+          "expr": "increase(stale{stream=\"upstream\",port=~\"$port\"}[1m])",
+          "format": "heatmap",
           "hide": false,
           "instant": false,
-          "legendFormat": "stale",
+          "legendFormat": "stale, {{ port }}",
           "range": true,
           "refId": "C"
         }
       ],
-      "title": "Diff upstream shares in 1 minute, port 4042",
+      "title": "Diff upstream shares in 1 minute",
       "type": "timeseries"
     },
     {
@@ -1041,9 +1274,9 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 19
+        "y": 25
       },
-      "id": 28,
+      "id": 33,
       "options": {
         "legend": {
           "calcs": [
@@ -1065,9 +1298,10 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "increase(accepted{stream=\"downstream\",port=\"4042\"}[1m])",
+          "expr": "increase(accepted{stream=\"downstream\",port=~\"$port\"}[1m])",
+          "format": "heatmap",
           "instant": false,
-          "legendFormat": "accepted",
+          "legendFormat": "accepted, {{ port }}",
           "range": true,
           "refId": "A"
         },
@@ -1077,10 +1311,11 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "irate(rejected{stream=\"downstream\",port=\"4042\"}[1m])",
+          "expr": "increase(rejected{stream=\"downstream\",port=~\"$port\"}[1m])",
+          "format": "heatmap",
           "hide": false,
           "instant": false,
-          "legendFormat": "rejected",
+          "legendFormat": "rejected, {{ port }}",
           "range": true,
           "refId": "B"
         },
@@ -1090,822 +1325,66 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "irate(stale{stream=\"downstream\",port=\"4042\"}[1m])",
+          "expr": "increase(stale{stream=\"downstream\",port=~\"$port\"}[1m])",
+          "format": "heatmap",
           "hide": false,
           "instant": false,
-          "legendFormat": "stale",
+          "legendFormat": "stale, {{ port }}",
           "range": true,
           "refId": "C"
         }
       ],
-      "title": "Diff downstream shares in 1 minute, port 4042",
+      "title": "Diff downstream shares in 1 minute",
       "type": "timeseries"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 26
-      },
-      "id": 26,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": ""
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "displayName": "Connection count, upstream, config 4043",
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "#00f2ff",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 2,
-            "w": 12,
-            "x": 0,
-            "y": 27
-          },
-          "id": 11,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "last"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": ""
-              },
-              "editorMode": "code",
-              "expr": "conn_count {stream=\"upstream\", port=\"4043\"}",
-              "instant": false,
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": ""
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "displayName": "Connection count, downstream, config 4043",
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "#00f2ff",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 2,
-            "w": 12,
-            "x": 12,
-            "y": 27
-          },
-          "id": 12,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "none",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "last"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": ""
-              },
-              "editorMode": "code",
-              "expr": "conn_count {stream=\"downstream\", port=\"4043\"}",
-              "instant": false,
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "fieldMinMax": true,
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "GHs"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 29
-          },
-          "id": 13,
-          "options": {
-            "legend": {
-              "calcs": [
-                "last",
-                "min",
-                "max",
-                "mean"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": ""
-              },
-              "editorMode": "code",
-              "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\",port=\"4043\"}[5m])) by (instance)",
-              "instant": false,
-              "legendFormat": "HR 5m, {{port}}",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": ""
-              },
-              "editorMode": "code",
-              "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\",port=\"4043\"}[1h])) by (instance)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "HR 1h, {{port}}",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "HR upstream, port-4043",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "fieldMinMax": true,
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "GHs"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 29
-          },
-          "id": 14,
-          "options": {
-            "legend": {
-              "calcs": [
-                "last",
-                "min",
-                "max",
-                "mean"
-              ],
-              "displayMode": "table",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": ""
-              },
-              "editorMode": "code",
-              "expr": "sum(avg_over_time(hr_1min{stream=\"downstream\",port=\"4043\"}[5m])) by (instance)",
-              "instant": false,
-              "legendFormat": "HR 5m, {{port}}",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": ""
-              },
-              "editorMode": "code",
-              "expr": "sum(avg_over_time(hr_1min{stream=\"downstream\", port=\"4043\"}[1h])) by (instance)",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "HR 1h, {{port}}",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "HR downstream, port-4043",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "#00f2ff",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 3,
-            "w": 12,
-            "x": 0,
-            "y": 37
-          },
-          "id": 20,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "accepted {stream=\"upstream\", port=\"4043\"} / (accepted{stream=\"upstream\", port=\"4043\"} + rejected{stream=\"upstream\", port=\"4043\"} + stale{stream=\"upstream\",port=\"4043\"})",
-              "instant": false,
-              "legendFormat": "Accepted",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "rejected {stream=\"upstream\", port=\"4043\"} / (accepted{stream=\"upstream\", port=\"4043\"} + rejected{stream=\"upstream\", port=\"4043\"} + stale{stream=\"upstream\",port=\"4043\"})",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "Rejected",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "stale {stream=\"upstream\", port=\"4043\"} / (accepted{stream=\"upstream\", port=\"4043\"} + rejected{stream=\"upstream\", port=\"4043\"} + stale{stream=\"upstream\",port=\"4043\"})",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "Stale",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "Upstream, config 4043",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "#00f2ff",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "percentunit"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 3,
-            "w": 12,
-            "x": 12,
-            "y": 37
-          },
-          "id": 21,
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "justifyMode": "auto",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showPercentChange": false,
-            "textMode": "auto",
-            "wideLayout": true
-          },
-          "pluginVersion": "10.4.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "accepted {stream=\"downstream\", port=\"4043\"} / (accepted{stream=\"downstream\", port=\"4043\"} + rejected{stream=\"downstream\", port=\"4043\"} + stale{stream=\"downstream\",port=\"4043\"})",
-              "instant": false,
-              "legendFormat": "Accepted",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "rejected {stream=\"downstream\", port=\"4043\"} / (accepted{stream=\"downstream\", port=\"4043\"} + rejected{stream=\"downstream\", port=\"4043\"} + stale{stream=\"downstream\",port=\"4043\"})",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "Rejected",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "stale {stream=\"downstream\", port=\"4043\"} / (accepted{stream=\"downstream\", port=\"4043\"} + rejected{stream=\"downstream\", port=\"4043\"} + stale{stream=\"downstream\",port=\"4043\"})",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "Stale",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "Downstream, config 4043",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "smooth",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 12,
-            "x": 0,
-            "y": 40
-          },
-          "id": 24,
-          "options": {
-            "legend": {
-              "calcs": [
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "right",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "increase(accepted{stream=\"upstream\",port=\"4043\"}[1m])",
-              "instant": false,
-              "legendFormat": "accepted",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "irate(rejected{stream=\"downstream\",port=\"4042\"}[1m])",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "rejected",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "irate(stale{stream=\"downstream\",port=\"4042\"}[1m])",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "stale",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "Diff upstream shares in 1 minute, port 4043",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisBorderShow": false,
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "insertNulls": false,
-                "lineInterpolation": "smooth",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              },
-              "unit": "none"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 12,
-            "x": 12,
-            "y": 40
-          },
-          "id": 25,
-          "options": {
-            "legend": {
-              "calcs": [
-                "last"
-              ],
-              "displayMode": "table",
-              "placement": "right",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "increase(accepted{stream=\"downstream\",port=\"4043\"}[1m])",
-              "instant": false,
-              "legendFormat": "accepted",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "irate(rejected{stream=\"downstream\",port=\"4042\"}[1m])",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "rejected",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "expr": "irate(stale{stream=\"downstream\",port=\"4042\"}[1m])",
-              "hide": false,
-              "instant": false,
-              "legendFormat": "stale",
-              "range": true,
-              "refId": "C"
-            }
-          ],
-          "title": "Diff downstream shares in 1 minute, port 4043",
-          "type": "timeseries"
-        }
-      ],
-      "title": "Farm-proxy metrics, port 4043",
-      "type": "row"
     }
   ],
   "refresh": "5s",
   "schemaVersion": 39,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "4042"
+          ],
+          "value": [
+            "4042"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
+        "definition": "label_values(port)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "port",
+        "multi": true,
+        "name": "port",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(port)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Farm-proxy",
-  "uid": "f2621806-9018-4be0-b1de-1e28d2d5c5f3",
-  "version": 1,
+  "uid": "adgjfb01z0nwgf",
+  "version": 12,
   "weekStart": ""
 }
