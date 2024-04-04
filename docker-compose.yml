@@ -59,7 +59,7 @@ services:
       - farm-proxy
 
   farm-proxy:
-    image: public.ecr.aws/k7t2c2k4/farm-proxy:test_version
+    image: public.ecr.aws/k7t2c2k4/farm-proxy:stg
     container_name: anthill-farm-proxy
     restart: always
     volumes:
