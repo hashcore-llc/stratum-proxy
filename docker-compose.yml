@@ -18,6 +18,7 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--storage.tsdb.retention.time=14d'
     ports:
       - 9090:9090
     depends_on:
@@ -59,7 +60,7 @@ services:
       - farm-proxy
 
   farm-proxy:
-    image: public.ecr.aws/k7t2c2k4/farm-proxy:stg
+    image: public.ecr.aws/k7t2c2k4/farm-proxy:${ENV:-stg}
     container_name: anthill-farm-proxy
     restart: always
     volumes:
