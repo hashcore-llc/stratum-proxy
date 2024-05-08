@@ -1,4 +1,27 @@
 log_level: info
-mining_algorithm: sha256d
 bind_api_addr: 0.0.0.0:4050
 log_dir: "./configs/log"
+telemetry:
+  "service_name": "farm-proxy"
+  "endpoint": "http://164.90.213.135:4317"
+  "headers": "uptrace-dsn=https://pee_C1pATOojz7ZQvzzYNw@api.uptrace.dev?grpc=4317"
+  "resource_attributes": "service.version=1.0.0,deployment.environment=demo"
+ports:
+  - bind_port: 3333               # Mining port
+    name: "via-btc"               # Name for grafana
+    submission_rate: 0.2          # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
+    aggregation_ratio: 20         # Number of connected miners per connection to the pool
+    mining_algorithm: sha256d     # Selected port algorithm (sha256d / scrypt)
+    pool:
+      url: btc.viabtc.io:3333     # Stratum URL
+      user: login1.{worker}       # Pools login (mining name)
+      pass: 123                   # Password (123 or x)
+  - bind_port: 3434               # Mining port
+    name: "via-ltc"               # Name for grafana
+    submission_rate: 0.2          # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
+    aggregation_ratio: 20         # Number of connected miners per connection to the pool
+    mining_algorithm: sha256d
+    pool:
+      url: ltc.viabtc.io:3333     # Stratum URL
+      user: login1.{worker}       # Pools login (mining name)
+      pass: 123                   # Password (123 or x)
