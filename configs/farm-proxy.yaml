@@ -10,18 +10,18 @@ ports:
   - bind_port: 3333               # Mining port
     name: "via-btc"               # Name for grafana
     submission_rate: 0.2          # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
-    aggregation_ratio: 20         # Number of connected miners per connection to the pool
+    aggregation_ratio: 255        # Number of connected miners per connection to the pool (default 255, range from 1 to 256)
     mining_algorithm: sha256d     # Selected port algorithm (sha256d / scrypt)
     pool:
       url: btc.viabtc.io:3333     # Stratum URL
-      user: login1.{worker}       # Pools login (mining name)
+      user: login1       # Pools login (mining name)
       pass: 123                   # Password (123 or x)
   - bind_port: 3434               # Mining port
     name: "via-ltc"               # Name for grafana
     submission_rate: 0.2          # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
-    aggregation_ratio: 20         # Number of connected miners per connection to the pool
-    mining_algorithm: sha256d
+    aggregation_ratio: 255        # Number of connected miners per connection to the pool (default 255, range from 1 to 256)
+    mining_algorithm: scrypt      # Selected port algorithm (sha256d / scrypt)
     pool:
       url: ltc.viabtc.io:3333     # Stratum URL
-      user: login1.{worker}       # Pools login (mining name)
+      user: login1       # Pools login (mining name)
       pass: 123                   # Password (123 or x)
