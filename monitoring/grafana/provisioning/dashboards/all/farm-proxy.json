@@ -7,7 +7,7 @@
           "type": "grafana",
           "uid": "-- Grafana --"
         },
-        "enable": false,
+        "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
@@ -51,7 +51,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               }
@@ -77,7 +78,7 @@
             },
             "showHeader": true
           },
-          "pluginVersion": "10.4.2",
+          "pluginVersion": "10.4.3",
           "targets": [
             {
               "datasource": {
@@ -179,7 +180,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#00f2ff",
+                "color": "#03c9d7",
                 "value": null
               }
             ]
@@ -190,7 +191,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 5,
+        "w": 4,
         "x": 0,
         "y": 2
       },
@@ -198,7 +199,7 @@
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "justifyMode": "auto",
+        "justifyMode": "center",
         "orientation": "vertical",
         "reduceOptions": {
           "calcs": [
@@ -208,10 +209,13 @@
           "values": false
         },
         "showPercentChange": false,
+        "text": {
+          "valueSize": 50
+        },
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -222,7 +226,7 @@
           "exemplar": false,
           "expr": "uptime_secs",
           "instant": false,
-          "legendFormat": "Uptime",
+          "legendFormat": " ",
           "range": true,
           "refId": "A"
         }
@@ -247,7 +251,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#00f2ff",
+                "color": "#03c9d7",
                 "value": null
               }
             ]
@@ -258,13 +262,13 @@
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 5,
+        "x": 4,
         "y": 2
       },
       "id": 35,
       "options": {
-        "colorMode": "value",
-        "graphMode": "none",
+        "colorMode": "none",
+        "graphMode": "area",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
@@ -275,11 +279,13 @@
           "values": false
         },
         "showPercentChange": false,
-        "text": {},
+        "text": {
+          "valueSize": 50
+        },
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -304,7 +310,6 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "CPU load",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -315,12 +320,167 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#00f2ff",
+                "color": "#03c9d7",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 2
+      },
+      "id": 46,
+      "options": {
+        "colorMode": "none",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {
+          "valueSize": 50
+        },
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "10.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[$__interval])) by (instance) / sum(avg_over_time(hr_1min{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[$__interval])) by (instance)",
+          "instant": false,
+          "legendFormat": "Upstream",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Hashrate ratio",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#03c9d7",
+                "value": null
+              }
+            ]
+          },
+          "unit": "GHs"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 2
+      },
+      "id": 43,
+      "options": {
+        "displayMode": "gradient",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
+      },
+      "pluginVersion": "10.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[$__interval])) by (instance)",
+          "instant": false,
+          "legendFormat": "Upstream",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(avg_over_time(hr_1min{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[$__interval])) by (instance)",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Downstream",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Hashrate",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "CPU, memory, disk",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "#03c9d7",
                 "value": null
               },
               {
+                "color": "yellow",
+                "value": 70
+              },
+              {
                 "color": "red",
-                "value": 80
+                "value": 90
               }
             ]
           },
@@ -330,16 +490,18 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 7,
-        "x": 9,
+        "w": 6,
+        "x": 18,
         "y": 2
       },
       "id": 3,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "vertical",
+        "displayMode": "lcd",
+        "maxVizHeight": 300,
+        "minVizHeight": 16,
+        "minVizWidth": 8,
+        "namePlacement": "auto",
+        "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
             "last"
@@ -347,11 +509,11 @@
           "fields": "",
           "values": false
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
+        "showUnfilled": true,
+        "sizing": "auto",
+        "valueMode": "color"
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -365,153 +527,36 @@
           "legendFormat": "CPU",
           "range": true,
           "refId": "B"
-        }
-      ],
-      "title": "CPU",
-      "type": "stat"
-    },
-    {
-      "datasource": {},
-      "description": "Amount of used RAM",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#00f2ff",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 2
-      },
-      "id": 4,
-      "options": {
-        "minVizHeight": 29,
-        "minVizWidth": 200,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": ""
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
           "expr": "((node_memory_MemTotal_bytes{job=~\"node-exporter\"} - node_memory_MemAvailable_bytes{job=~\"node-exporter\"}) / node_memory_MemTotal_bytes{job=~\"node-exporter\"}) * 100",
+          "hide": false,
           "instant": false,
           "legendFormat": "Memory",
           "range": true,
           "refId": "A"
-        }
-      ],
-      "title": "Memory",
-      "type": "gauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Disk space usage",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "decimals": 1,
-          "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#00f2ff",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 0.75
-              },
-              {
-                "color": "red",
-                "value": 0.9
-              }
-            ]
-          },
-          "unit": "percentunit"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 2
-      },
-      "id": 5,
-      "options": {
-        "minVizHeight": 200,
-        "minVizWidth": 200,
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "sizing": "auto"
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": ""
+            "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(node_filesystem_size_bytes{fstype=~\"xfs|ext4\",job=~\"node-exporter\"} - node_filesystem_free_bytes{fstype=~\"xfs|ext4\",job=~\"node-exporter\"} )/ node_filesystem_size_bytes{fstype=~\"xfs|ext4\",job=~\"node-exporter\"}",
+          "expr": "(node_filesystem_size_bytes{fstype=~\"xfs|ext4\",job=~\"node-exporter\"} - node_filesystem_free_bytes{fstype=~\"xfs|ext4\",job=~\"node-exporter\"} )/ node_filesystem_size_bytes{fstype=~\"xfs|ext4\",job=~\"node-exporter\"} * 100",
+          "hide": false,
           "instant": false,
-          "legendFormat": "Disk space",
+          "legendFormat": "Disk",
           "range": true,
-          "refId": "A"
+          "refId": "C"
         }
       ],
-      "title": "Disk space",
-      "type": "gauge"
+      "title": "Server info",
+      "type": "bargauge"
     },
     {
       "datasource": {
@@ -531,7 +576,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#00f2ff",
+                "color": "#03c9d7",
                 "value": null
               }
             ]
@@ -563,7 +608,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -599,7 +644,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#00f2ff",
+                "color": "#03c9d7",
                 "value": null
               }
             ]
@@ -630,7 +675,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -915,18 +960,19 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Accepted shares forwarded to target pool(s)",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
-                "color": "#00f2ff",
+                "color": "#03c9d7",
                 "value": null
               }
             ]
@@ -937,28 +983,31 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 12,
         "x": 0,
         "y": 18
       },
-      "id": 19,
+      "id": 44,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
+        "displayMode": "gradient",
+        "maxVizHeight": 14,
+        "minVizHeight": 11,
+        "minVizWidth": 6,
+        "namePlacement": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
           "fields": "",
           "values": false
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
+        "showUnfilled": true,
+        "sizing": "auto",
+        "text": {},
+        "valueMode": "color"
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -967,66 +1016,11 @@
           },
           "editorMode": "code",
           "expr": "sum(accepted {stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) / (sum(accepted{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(rejected{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(stale{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}))",
-          "format": "heatmap",
           "instant": false,
-          "legendFormat": "Accepted shares",
+          "legendFormat": "Accepted",
           "range": true,
           "refId": "A"
-        }
-      ],
-      "title": "Accepted shares",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Rejected shares forwarded to target pool(s)",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#00f2ff",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percentunit"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 18
-      },
-      "id": 29,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
@@ -1036,64 +1030,10 @@
           "expr": "sum(rejected {stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) / (sum(accepted{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(rejected{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(stale{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}))",
           "hide": false,
           "instant": false,
-          "legendFormat": "Rejected shares",
+          "legendFormat": "Rejected",
           "range": true,
           "refId": "B"
-        }
-      ],
-      "title": "Rejected shares",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Stale shares forwarded to target pool(s)",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#00f2ff",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percentunit"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 8,
-        "y": 18
-      },
-      "id": 30,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
@@ -1103,31 +1043,32 @@
           "expr": "sum(stale {stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) / (sum(accepted{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(rejected{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(stale{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}))",
           "hide": false,
           "instant": false,
-          "legendFormat": "Stale shares",
+          "legendFormat": "Stale",
           "range": true,
           "refId": "C"
         }
       ],
-      "title": "Stale shares",
-      "type": "stat"
+      "title": "Upstream shares",
+      "type": "bargauge"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Accepted shares received from miners",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
           "mappings": [],
+          "max": 1,
+          "min": 0,
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
-                "color": "#00f2ff",
+                "color": "#03c9d7",
                 "value": null
               }
             ]
@@ -1138,28 +1079,31 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 12,
         "x": 12,
         "y": 18
       },
-      "id": 18,
+      "id": 45,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
+        "displayMode": "gradient",
+        "maxVizHeight": 14,
+        "minVizHeight": 11,
+        "minVizWidth": 6,
+        "namePlacement": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
           "fields": "",
           "values": false
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
+        "showUnfilled": true,
+        "sizing": "auto",
+        "text": {},
+        "valueMode": "color"
       },
-      "pluginVersion": "10.4.2",
+      "pluginVersion": "10.4.3",
       "targets": [
         {
           "datasource": {
@@ -1168,66 +1112,11 @@
           },
           "editorMode": "code",
           "expr": "sum(accepted {stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) / (sum(accepted{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(rejected{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(stale{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}))",
-          "format": "heatmap",
           "instant": false,
-          "legendFormat": "Accepted shares",
+          "legendFormat": "Accepted",
           "range": true,
           "refId": "A"
-        }
-      ],
-      "title": "Accepted shares",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Rejected shares received from miners",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#00f2ff",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percentunit"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 16,
-        "y": 18
-      },
-      "id": 31,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
@@ -1235,67 +1124,12 @@
           },
           "editorMode": "code",
           "expr": "sum(rejected {stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) / (sum(accepted{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(rejected{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(stale{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}))",
-          "format": "heatmap",
           "hide": false,
           "instant": false,
-          "legendFormat": "Rejected shares",
+          "legendFormat": "Rejected",
           "range": true,
           "refId": "B"
-        }
-      ],
-      "title": "Rejected shares",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "Stale shares received from miners",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#00f2ff",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percentunit"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 20,
-        "y": 18
-      },
-      "id": 32,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "10.4.2",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
@@ -1305,13 +1139,13 @@
           "expr": "sum(stale {stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) / (sum(accepted{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(rejected{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}) + sum(stale{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}))",
           "hide": false,
           "instant": false,
-          "legendFormat": "Stale shares",
+          "legendFormat": "Stale",
           "range": true,
           "refId": "C"
         }
       ],
-      "title": "Stale shares",
-      "type": "stat"
+      "title": "Downstream shares",
+      "type": "bargauge"
     },
     {
       "datasource": {
@@ -1578,6 +1412,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -1628,12 +1463,8 @@
       "id": 41,
       "options": {
         "legend": {
-          "calcs": [
-            "last",
-            "min",
-            "max"
-          ],
-          "displayMode": "table",
+          "calcs": [],
+          "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
         },
@@ -1679,6 +1510,7 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -1728,12 +1560,8 @@
       "id": 42,
       "options": {
         "legend": {
-          "calcs": [
-            "last",
-            "min",
-            "max"
-          ],
-          "displayMode": "table",
+          "calcs": [],
+          "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
         },
@@ -1771,7 +1599,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "sha256d",
           "value": "sha256d"
         },
@@ -1799,12 +1627,16 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
-            "viabtc1"
+            "bitcap",
+            "viabtc1",
+            "viabtc2"
           ],
           "value": [
-            "viabtc1"
+            "bitcap",
+            "viabtc1",
+            "viabtc2"
           ]
         },
         "datasource": {
@@ -1832,8 +1664,8 @@
       {
         "current": {
           "selected": false,
-          "text": "4042",
-          "value": "4042"
+          "text": "4045",
+          "value": "4045"
         },
         "datasource": {
           "type": "prometheus",
