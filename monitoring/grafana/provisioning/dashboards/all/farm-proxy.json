@@ -51,8 +51,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -212,7 +211,7 @@
         "text": {
           "valueSize": 50
         },
-        "textMode": "auto",
+        "textMode": "value",
         "wideLayout": true
       },
       "pluginVersion": "10.4.3",
@@ -269,7 +268,7 @@
       "options": {
         "colorMode": "none",
         "graphMode": "area",
-        "justifyMode": "center",
+        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -282,7 +281,7 @@
         "text": {
           "valueSize": 50
         },
-        "textMode": "auto",
+        "textMode": "value_and_name",
         "wideLayout": true
       },
       "pluginVersion": "10.4.3",
@@ -297,7 +296,7 @@
           "expr": "sum(conn_count {algorithm=\"$algorithm\", name=~\"$route_name\",stream=\"downstream\" }) / sum(conn_count{algorithm=\"$algorithm\", name=~\"$route_name\",stream=\"upstream\" })",
           "format": "heatmap",
           "instant": false,
-          "legendFormat": "Aggregation",
+          "legendFormat": " ",
           "range": true,
           "refId": "A"
         }
@@ -339,7 +338,7 @@
       "options": {
         "colorMode": "none",
         "graphMode": "area",
-        "justifyMode": "center",
+        "justifyMode": "auto",
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -352,7 +351,7 @@
         "text": {
           "valueSize": 50
         },
-        "textMode": "auto",
+        "textMode": "value_and_name",
         "wideLayout": true
       },
       "pluginVersion": "10.4.3",
@@ -365,7 +364,7 @@
           "editorMode": "code",
           "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[$__interval])) by (instance) / sum(avg_over_time(hr_1min{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[$__interval])) by (instance)",
           "instant": false,
-          "legendFormat": "Upstream",
+          "legendFormat": " ",
           "range": true,
           "refId": "A"
         }
@@ -496,7 +495,7 @@
       },
       "id": 3,
       "options": {
-        "displayMode": "lcd",
+        "displayMode": "gradient",
         "maxVizHeight": 300,
         "minVizHeight": 16,
         "minVizWidth": 8,
@@ -1599,7 +1598,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "sha256d",
           "value": "sha256d"
         },
@@ -1627,7 +1626,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "bitcap",
             "viabtc1",
