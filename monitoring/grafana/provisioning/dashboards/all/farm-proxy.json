@@ -262,7 +262,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unit": "dateTimeAsLocal"
         },
         "overrides": []
       },
@@ -274,8 +275,8 @@
       },
       "id": 52,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
+        "colorMode": "none",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -286,11 +287,28 @@
           "values": false
         },
         "showPercentChange": false,
+        "text": {
+          "valueSize": 28
+        },
         "textMode": "auto",
         "wideLayout": true
       },
       "pluginVersion": "10.4.3",
-      "title": "Build Time",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "build_version * 1000",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Build time",
       "type": "stat"
     },
     {
@@ -1211,8 +1229,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#d19a66",
-                    "value": null
+                    "color": "#d19a66"
                   }
                 ]
               }
@@ -1308,8 +1325,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#d19a66",
-                    "value": null
+                    "color": "#d19a66"
                   }
                 ]
               }
@@ -1402,8 +1418,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1572,8 +1587,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1744,8 +1758,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#00f2ff",
-                    "value": null
+                    "color": "#00f2ff"
                   }
                 ]
               },
@@ -1887,8 +1900,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#00f2ff",
-                    "value": null
+                    "color": "#00f2ff"
                   }
                 ]
               },
@@ -2013,8 +2025,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }

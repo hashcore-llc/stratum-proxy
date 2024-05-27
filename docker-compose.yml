@@ -1,8 +1,8 @@
 version: '3.8'
-name: 'anthill-farm-proxy'
+name: 'proxy'
 
 networks:
-  anthill:
+  hashcore-proxy:
     driver: bridge
     ipam:
       config:
@@ -15,7 +15,7 @@ volumes:
 services:
   prometheus:
     image: prom/prometheus
-    container_name: anthill-prometheus
+    container_name: hashcore-prometheus
     restart: always
     volumes:
       - ./monitoring/prometheus:/etc/prometheus/
@@ -31,11 +31,11 @@ services:
     depends_on:
       - node-exporter
     networks:
-      - anthill
+      - hashcore-proxy
 
   node-exporter:
     image: prom/node-exporter
-    container_name: anthill-node-exporter
+    container_name: hascore-node-exporter
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -51,17 +51,20 @@ services:
     deploy:
       mode: global
     networks:
-      - anthill
+      - hashcore-proxy
 
   grafana:
     image: grafana/grafana
-    container_name: anthill-grafana
+    container_name: hascore-grafana
     restart: always
     environment:
       GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
     volumes:
       - grafana_data:/var/lib/grafana
       - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
+      - ./monitoring/grafana/public/img/fav32.png:/usr/share/grafana/public/img/fav32.png
+      - ./monitoring/grafana/public/img/grafana_icon.svg:/usr/share/grafana/public/img/grafana_icon.svg
+
     env_file:
       - ./monitoring/grafana/config.monitoring
     ports:
@@ -70,11 +73,11 @@ services:
       - prometheus
       - farm-proxy
     networks:
-      - anthill
+      - hashcore-proxy
 
   farm-proxy:
     image: public.ecr.aws/k7t2c2k4/farm-proxy:${ENV:-stg}
-    container_name: anthill-farm-proxy
+    container_name: hashcore-farm-proxy
     restart: always
     volumes:
     # /!\ To be modified depending on your needs /!\ if you use windows, you need change ./configs to .\configs
@@ -84,4 +87,4 @@ services:
       - "4043:4043"
       - "4050:4050"
     networks:
-      - anthill
+      - hashcore-proxy
