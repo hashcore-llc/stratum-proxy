@@ -72,7 +72,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -154,7 +154,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -223,7 +223,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -248,6 +248,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -258,12 +259,16 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "#d19a66",
+                "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
-          "unit": "dateTimeAsLocal"
+          "unit": "string"
         },
         "overrides": []
       },
@@ -276,24 +281,21 @@
       "id": 52,
       "options": {
         "colorMode": "none",
-        "graphMode": "none",
+        "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "",
+          "fields": "/^version$/",
           "values": false
         },
         "showPercentChange": false,
-        "text": {
-          "valueSize": 28
-        },
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -301,14 +303,25 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "build_version * 1000",
+          "expr": "release_version",
+          "hide": false,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Build time",
+      "title": "Version",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "keepLabels": [
+              "version"
+            ]
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -363,7 +376,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -442,7 +455,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -534,7 +547,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -597,7 +610,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -744,6 +757,7 @@
           "sortDesc": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "multi",
           "sort": "none"
         }
@@ -925,6 +939,7 @@
           "sortDesc": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "multi",
           "sort": "none"
         }
@@ -1028,7 +1043,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -1124,7 +1139,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "10.4.3",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
@@ -2229,6 +2244,7 @@
     "from": "now-6h",
     "to": "now"
   },
+  "timeRangeUpdatedDuringEditOrView": false,
   "timepicker": {},
   "timezone": "",
   "title": "Farm-proxy",
