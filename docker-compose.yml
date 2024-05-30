@@ -76,7 +76,7 @@ services:
       - hashcore-proxy
 
   farm-proxy:
-    image: public.ecr.aws/k7t2c2k4/farm-proxy:${ENV:-latest}
+    image: ${REPOSITORY:-public.ecr.aws/k7t2c2k4/farm-proxy-dev}:${ENV:-latest}
     container_name: hashcore-farm-proxy
     restart: always
     volumes:
