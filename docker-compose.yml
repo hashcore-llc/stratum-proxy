@@ -83,8 +83,7 @@ services:
     # /!\ To be modified depending on your needs /!\ if you use windows, you need change ./configs to .\configs
       - ./configs:/opt/farm-proxy/configs
     ports:
-      - "4042:4042"
-      - "4043:4043"
-      - "4050:4050"
+      - "4000-4049:4000-4049"
+      - "4051-4100:4051-4100"
     networks:
       - hashcore-proxy
