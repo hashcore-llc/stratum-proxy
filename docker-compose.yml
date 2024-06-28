@@ -35,7 +35,7 @@ services:
 
   node-exporter:
     image: prom/node-exporter
-    container_name: hascore-node-exporter
+    container_name: hashcore-node-exporter
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -55,7 +55,7 @@ services:
 
   grafana:
     image: grafana/grafana
-    container_name: hascore-grafana
+    container_name: hashcore-grafana
     restart: always
     environment:
       GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
