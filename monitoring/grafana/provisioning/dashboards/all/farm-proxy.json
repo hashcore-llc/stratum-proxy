@@ -80,7 +80,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(avg_over_time(hr_1min_total{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[1m])) by (instance)",
+          "expr": "sum(avg_over_time(hr_1min_total{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[$__range])) by (instance)",
           "instant": false,
           "legendFormat": "Upstream",
           "range": true,
@@ -92,7 +92,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(avg_over_time(hr_1min_total{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[1m])) by (instance)",
+          "expr": "sum(avg_over_time(hr_1min_total{stream=\"downstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[$__range])) by (instance)",
           "hide": false,
           "instant": false,
           "legendFormat": "Downstream",
@@ -1278,8 +1278,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#d19a66",
-                    "value": null
+                    "color": "#d19a66"
                   }
                 ]
               }
@@ -1375,8 +1374,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#d19a66",
-                    "value": null
+                    "color": "#d19a66"
                   }
                 ]
               }
@@ -1469,8 +1467,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1637,8 +1634,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1807,8 +1803,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#00f2ff",
-                    "value": null
+                    "color": "#00f2ff"
                   }
                 ]
               },
@@ -1950,8 +1945,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "#00f2ff",
-                    "value": null
+                    "color": "#00f2ff"
                   }
                 ]
               },
@@ -2076,8 +2070,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -2213,14 +2206,12 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
-            "bitcap",
             "viabtc1",
             "viabtc2"
           ],
           "value": [
-            "bitcap",
             "viabtc1",
             "viabtc2"
           ]
@@ -2250,8 +2241,8 @@
       {
         "current": {
           "selected": false,
-          "text": "4045",
-          "value": "4045"
+          "text": "4042",
+          "value": "4042"
         },
         "datasource": {
           "type": "prometheus",
