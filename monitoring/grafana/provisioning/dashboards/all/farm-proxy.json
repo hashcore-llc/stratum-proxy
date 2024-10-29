@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 2,
-  "id": 8,
+  "id": 16,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -72,7 +72,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -155,7 +155,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -225,7 +225,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -295,7 +295,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -378,7 +378,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -457,7 +457,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -550,7 +550,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -614,7 +614,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -649,6 +649,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -863,6 +864,7 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1079,7 +1081,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -1175,7 +1177,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "11.1.3",
+      "pluginVersion": "11.2.0",
       "targets": [
         {
           "datasource": {
@@ -2044,7 +2046,7 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2052,123 +2054,123 @@
         "y": 20
       },
       "id": 37,
-      "panels": [
+      "panels": [],
+      "title": "Legend",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 36,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "11.2.0",
+      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "fieldConfig": {
-            "defaults": {
-              "custom": {
-                "align": "auto",
-                "cellOptions": {
-                  "type": "auto"
-                },
-                "inspect": false
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 21
-          },
-          "id": 36,
-          "options": {
-            "cellHeight": "sm",
-            "footer": {
-              "countRows": false,
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
-            },
-            "showHeader": true
-          },
-          "pluginVersion": "11.1.0",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "conn_count",
-              "format": "table",
-              "instant": true,
-              "legendFormat": "__auto",
-              "range": false,
-              "refId": "A"
-            }
-          ],
-          "title": "All available configurations",
-          "transformations": [
-            {
-              "id": "extractFields",
-              "options": {
-                "format": "kvp",
-                "keepTime": false,
-                "replace": false,
-                "source": "port"
-              }
-            },
-            {
-              "id": "groupBy",
-              "options": {
-                "fields": {
-                  "algorithm": {
-                    "aggregations": [],
-                    "operation": "groupby"
-                  },
-                  "name": {
-                    "aggregations": [],
-                    "operation": "groupby"
-                  },
-                  "port": {
-                    "aggregations": [],
-                    "operation": "groupby"
-                  }
-                }
-              }
-            },
-            {
-              "id": "filterByValue",
-              "options": {
-                "filters": [
-                  {
-                    "config": {
-                      "id": "equal",
-                      "options": {
-                        "value": "$algorithm"
-                      }
-                    },
-                    "fieldName": "algorithm"
-                  }
-                ],
-                "match": "all",
-                "type": "exclude"
-              }
-            }
-          ],
-          "type": "table"
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "conn_count",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
         }
       ],
-      "title": "Legend",
-      "type": "row"
+      "title": "All available configurations",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "keepTime": false,
+            "replace": false,
+            "source": "port"
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "algorithm": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "port": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "notEqual",
+                  "options": {
+                    "value": "$algorithm"
+                  }
+                },
+                "fieldName": "algorithm"
+              }
+            ],
+            "match": "all",
+            "type": "exclude"
+          }
+        }
+      ],
+      "type": "table"
     }
   ],
   "refresh": "5s",
@@ -2180,7 +2182,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "sha256d",
           "value": "sha256d"
         },
@@ -2208,16 +2210,12 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
-            "bitcap",
-            "viabtc1",
-            "viabtc2"
+            "bitcap"
           ],
           "value": [
-            "bitcap",
-            "viabtc1",
-            "viabtc2"
+            "bitcap"
           ]
         },
         "datasource": {
@@ -2280,6 +2278,6 @@
   "timezone": "",
   "title": "Farm-proxy",
   "uid": "adgjfb01z0nwgf",
-  "version": 12,
+  "version": 1,
   "weekStart": ""
 }
