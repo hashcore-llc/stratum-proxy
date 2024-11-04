@@ -37,14 +37,6 @@ scrape_configs:
          - targets: ['localhost:9090']
 
 
-  - job_name: 'cadvisor'
-
-    # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
-    static_configs:
-        - targets: ['cadvisor:8080']
-          labels:
-            instance: 'cadvisor'
 
   - job_name: 'node-exporter'
     # Override the global default and scrape targets from this job every 5 seconds.
@@ -53,6 +45,14 @@ scrape_configs:
       - targets: ['node-exporter:9100']
         labels:
           instance: 'node-exporter'
+  
+  - job_name: 'cadvisor'
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['hashcore-cadvisor:8080']
+        labels:
+          instance: 'hashcore-cadvisor'
           
 #  - job_name: 'pushgateway'
 #    scrape_interval: 10s
@@ -61,9 +61,6 @@ scrape_configs:
 #      - 'tasks.pushgateway'
 #      type: 'A'
 #      port: 9091
-
-#     static_configs:
-#          - targets: ['node-exporter:9100']
 
   - job_name: 'farm-proxy'
     scrape_interval: 5s
