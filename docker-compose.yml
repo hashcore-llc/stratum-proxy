@@ -80,19 +80,22 @@ services:
       - 3000:3000
     depends_on:
       - prometheus
-      - farm-proxy
+      - stratum-proxy
     networks:
       - hashcore-proxy
 
-  farm-proxy:
+  stratum-proxy:
     image: ${REPOSITORY:-public.ecr.aws/k7t2c2k4/farm-proxy}:${ENV:-latest}
-    container_name: hashcore-farm-proxy
+    container_name: hashcore-stratum-proxy
     restart: always
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
     # /!\ To be modified depending on your needs /!\ if you use windows, you need change ./configs to .\configs
       - ./configs:/opt/farm-proxy/configs
     ports:
-      - "5000-5100:5000-5100"
+      - "${MINING_PORTS}:${MINING_PORTS}"
     networks:
       - hashcore-proxy
       
