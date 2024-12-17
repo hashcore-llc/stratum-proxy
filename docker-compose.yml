@@ -67,7 +67,9 @@ services:
     container_name: hashcore-grafana
     restart: always
     environment:
-      GF_INSTALL_PLUGINS: 'grafana-clock-panel,grafana-simple-json-datasource'
+      - GF_INSTALL_PLUGINS='grafana-clock-panel,grafana-simple-json-datasource'
+      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
     volumes:
       - grafana_data:/var/lib/grafana
       - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
@@ -88,9 +90,6 @@ services:
     image: ${REPOSITORY:-public.ecr.aws/k7t2c2k4/farm-proxy}:${ENV:-latest}
     container_name: hashcore-stratum-proxy
     restart: always
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
     # /!\ To be modified depending on your needs /!\ if you use windows, you need change ./configs to .\configs
       - ./configs:/opt/farm-proxy/configs
@@ -98,4 +97,27 @@ services:
       - "${MINING_PORTS}:${MINING_PORTS}"
     networks:
       - hashcore-proxy
-      
+
+  stratum-proxy-configurator:
+    #image: ${REPOSITORY:-public.ecr.aws/k7t2c2k4/farm-proxy}:${ENV:-latest}
+    build:
+      context: /Users/sergeymurzin/PROJECTS/ANTHILL/farm-proxy
+      dockerfile: ${REPOSITORY_CONFIGURATOR}
+      args:
+        ADMIN_USERNNAME: weblogic1
+        ADMIN_PASSWORD: weblogic1
+        ADMIN_NAME: admin1
+      ssh:
+        - default=/Users/sergeymurzin/.ssh/anthull_bitbucket/id_ed25519
+    container_name: hashcore-stratum-proxy-configurator
+    restart: always
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
+    volumes:
+      - ./.env:/opt/farm-proxy/.env
+      - ./configs:/opt/farm-proxy/configs
+    ports:
+      - "6034:6034"
+    networks:
+      - hashcore-proxy

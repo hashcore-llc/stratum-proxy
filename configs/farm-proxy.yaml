@@ -14,7 +14,7 @@ ports:
       - url: btc.viabtc.io:443    # Stratum URL
         user: login1              # Pools login (mining name)
         pass: x                   # Password (123 or x)
-  - bind_port: 3434               # Mining port
+  - bind_port: 3334               # Mining port
     name: "via-ltc"               # Name for grafana
     submission_rate: 0.2          # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
     aggregation: 255              # Number of connected miners per connection to the pool (default 255, range from 1 to 256)
