@@ -7,6 +7,7 @@ ports:
     submission_rate: 0.2          # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
     aggregation: 255              # Number of connected miners per connection to the pool (default 255, range from 1 to 256)
     mining_algorithm: sha256d     # Selected port algorithm (sha256d / scrypt)
+    tls: true                     # enable tls connection with pools
     pools:
       - url: btc.viabtc.io:3333   # Stratum URL
         user: login1              # Pools login (mining name)
