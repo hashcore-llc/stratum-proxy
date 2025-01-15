@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 2,
-  "id": 1,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -808,7 +808,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\", source=\"main\", algorithm=\"$algorithm\", name=~\"$route_name\"}[15s])) by (instance)",
+          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[15s])) by (instance)",
           "format": "heatmap",
           "instant": false,
           "legendFormat": "HR 5m",
@@ -821,8 +821,8 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\", source=\"fallback\", algorithm=\"$algorithm\", name=~\"$route_name\"}[15s])) by (instance)",
-          "hide": false,
+          "expr": "sum(avg_over_time(hr_1min{stream=\"upstream\", algorithm=\"$algorithm\", name=~\"$route_name\"}[15s])) by (instance)",
+          "hide": true,
           "instant": false,
           "legendFormat": "HR 5m, fallback",
           "range": true,
@@ -2073,7 +2073,7 @@
       "type": "row"
     },
     {
-      "collapsed": false,
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2081,129 +2081,130 @@
         "y": 20
       },
       "id": 37,
-      "panels": [],
-      "title": "Legend",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 24,
-        "x": 0,
-        "y": 21
-      },
-      "id": 36,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": true
-      },
-      "pluginVersion": "11.2.0",
-      "targets": [
+      "panels": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "conn_count",
-          "format": "table",
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "A"
-        }
-      ],
-      "title": "All available configurations",
-      "transformations": [
-        {
-          "id": "extractFields",
-          "options": {
-            "format": "kvp",
-            "keepTime": false,
-            "replace": false,
-            "source": "port"
-          }
-        },
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "algorithm": {
-                "aggregations": [],
-                "operation": "groupby"
+          "fieldConfig": {
+            "defaults": {
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
               },
-              "name": {
-                "aggregations": [],
-                "operation": "groupby"
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green"
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 21
+          },
+          "id": 36,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "11.1.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "PBFA97CFB590B2093"
               },
-              "port": {
-                "aggregations": [],
-                "operation": "groupby"
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "conn_count",
+              "format": "table",
+              "instant": true,
+              "legendFormat": "__auto",
+              "range": false,
+              "refId": "A"
+            }
+          ],
+          "title": "All available configurations",
+          "transformations": [
+            {
+              "id": "extractFields",
+              "options": {
+                "format": "kvp",
+                "keepTime": false,
+                "replace": false,
+                "source": "port"
+              }
+            },
+            {
+              "id": "groupBy",
+              "options": {
+                "fields": {
+                  "algorithm": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "name": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "port": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  }
+                }
+              }
+            },
+            {
+              "id": "filterByValue",
+              "options": {
+                "filters": [
+                  {
+                    "config": {
+                      "id": "equal",
+                      "options": {
+                        "value": "$algorithm"
+                      }
+                    },
+                    "fieldName": "algorithm"
+                  }
+                ],
+                "match": "all",
+                "type": "exclude"
               }
             }
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "notEqual",
-                  "options": {
-                    "value": "$algorithm"
-                  }
-                },
-                "fieldName": "algorithm"
-              }
-            ],
-            "match": "all",
-            "type": "exclude"
-          }
+          ],
+          "type": "table"
         }
       ],
-      "type": "table"
+      "title": "Legend",
+      "type": "row"
     }
   ],
   "preload": false,
   "refresh": "5s",
   "schemaVersion": 40,
   "tags": [
-    "stratum-proxy"
+    "farm-proxy"
   ],
   "templating": {
     "list": [
@@ -2234,10 +2235,12 @@
       {
         "current": {
           "text": [
-            "bitcap"
+            "bitcap",
+            "viabtc1"
           ],
           "value": [
-            "bitcap"
+            "bitcap",
+            "viabtc1"
           ]
         },
         "datasource": {
@@ -2291,8 +2294,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "stratum-proxy",
+  "title": "Farm-proxy",
   "uid": "adgjfb01z0nwgf",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
