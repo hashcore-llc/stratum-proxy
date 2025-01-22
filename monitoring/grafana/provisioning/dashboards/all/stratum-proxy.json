@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 2,
-  "id": 2,
+  "id": 8,
   "links": [],
   "panels": [
     {
@@ -2296,6 +2296,6 @@
   "timezone": "",
   "title": "Farm-proxy",
   "uid": "adgjfb01z0nwgf",
-  "version": 2,
+  "version": 12,
   "weekStart": ""
 }
