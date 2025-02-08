@@ -19,6 +19,7 @@ volumes:
       device: "./configs"
 
 services:
+  # Metrics Storage
   prometheus:
     image: prom/prometheus
     container_name: hashcore-prometheus
@@ -38,6 +39,7 @@ services:
     networks:
       - hashcore-proxy
 
+  # metrics exporter
   node-exporter:
     image: prom/node-exporter
     container_name: hashcore-node-exporter
@@ -69,6 +71,7 @@ services:
     networks:
       - hashcore-proxy
 
+  # Charts for Metrics
   grafana:
     image: grafana/grafana
     container_name: hashcore-grafana
@@ -93,6 +96,7 @@ services:
     networks:
       - hashcore-proxy
 
+  # Stratum Proxy
   stratum-proxy:
     image: ${REPOSITORY:-public.ecr.aws/k7t2c2k4/farm-proxy}:${ENV:-latest}
     container_name: hashcore-stratum-proxy
@@ -103,3 +107,19 @@ services:
       - "4085:4085"
     networks:
       - hashcore-proxy
+
+  # Proxy Configurator
+  proxy-configurator:
+    image: envout/proxy-configurer:v1
+    container_name: hashcore-proxy-configurator
+    restart: always
+    ports:
+      - "6034:6034"
+    volumes:
+      - proxy_configs:/opt/config_agent/configs
+      - ./docker-compose.yml:/opt/config_agent/docker-compose.yml
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - hashcore-proxy
+    depends_on:
+      - stratum-proxy

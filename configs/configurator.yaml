@@ -1,0 +1,5 @@
+credentials:
+  username: your_username
+  password: random_password
+jwt:
+  secret: random_password
