@@ -62,7 +62,7 @@ scrape_configs:
 #      type: 'A'
 #      port: 9091
 
-  - job_name: 'farm-proxy'
+  - job_name: 'stratum-proxy'
     scrape_interval: 5s
     metrics_path: /api/metrics
     static_configs:
