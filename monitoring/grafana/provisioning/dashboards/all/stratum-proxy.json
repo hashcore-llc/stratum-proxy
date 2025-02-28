@@ -2174,7 +2174,7 @@
           "type": "state-timeline"
         }
       ],
-      "title": "State of Pools",
+      "title": "Upstream Pools",
       "type": "row"
     },
     {
