@@ -1,5 +1,7 @@
+# Login/Password pairs are used for authorization on the configurator
 credentials:
-  username: your_username
-  password: random_password
+  username: admin
+  password: admin
+# Secret key for JWT token generation. Configurator use this value on the backend side
 jwt:
-  secret: random_password
+  secret: random_value
