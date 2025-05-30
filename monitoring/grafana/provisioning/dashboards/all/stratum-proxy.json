@@ -32,6 +32,72 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 58,
+      "options": {
+        "SVGBaseFix": true,
+        "add100Percentage": true,
+        "calcsMutation": "none",
+        "centerAlignContent": true,
+        "codeData": "{\n  \"text\": \"Random text\"\n}",
+        "css": ".goto-button {\n  padding: 10px 20px;\n  background-color: #d19a66;\n  border: none;\n  border-radius: 6px;\n  font-size: 14px;\n  color: white;\n  cursor: pointer;\n}\n.goto-button:hover {\n  background-color: #b67f4d;\n}\n",
+        "dynamicData": false,
+        "dynamicFieldDisplayValues": false,
+        "dynamicHtmlGraphics": false,
+        "dynamicProps": false,
+        "html": "<div style=\"text-align: center;\">\n  <button id=\"goto-button\" class=\"goto-button\">Configurator</button>\n</div>",
+        "onInit": "const btn = htmlNode.querySelector('#goto-button');\n\nif (btn) {\n  btn.addEventListener('click', () => {\n    const currentHost = window.location.hostname;\n    const targetUrl = `http://${currentHost}:6034`;\n    window.open(targetUrl, '_blank');\n  });\n}",
+        "onInitOnResize": false,
+        "onRender": "// Sets the value from the first series on every refresh\nconst htmlgraphicsValue = htmlNode.getElementById('htmlgraphics-value');\n\nif (htmlgraphicsValue) {\n  const valueField = data.series[0]?.fields[1];\n  if (valueField) {\n    const length = valueField.values.length;\n    htmlgraphicsValue.textContent = valueField.values.get(length - 1);\n  } else {\n    htmlgraphicsValue.textContent = \"No data\"\n  }\n}\n",
+        "overflow": "visible",
+        "panelupdateOnMount": true,
+        "reduceOptions": {
+          "calcs": []
+        },
+        "renderOnMount": true,
+        "rootCSS": "",
+        "useGrafanaScrollbar": true
+      },
+      "pluginVersion": "2.1.1",
+      "targets": [
+        {
+          "refId": "A"
+        }
+      ],
+      "title": "",
+      "type": "gapit-htmlgraphics-panel"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -49,7 +115,7 @@
         "h": 4,
         "w": 6,
         "x": 0,
-        "y": 0
+        "y": 2
       },
       "id": 43,
       "options": {
@@ -76,7 +142,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -135,7 +201,7 @@
         "h": 4,
         "w": 3,
         "x": 6,
-        "y": 0
+        "y": 2
       },
       "id": 46,
       "options": {
@@ -158,7 +224,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -204,7 +270,7 @@
         "h": 4,
         "w": 3,
         "x": 9,
-        "y": 0
+        "y": 2
       },
       "id": 35,
       "options": {
@@ -227,7 +293,7 @@
         "textMode": "value_and_name",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -275,7 +341,7 @@
         "h": 4,
         "w": 3,
         "x": 12,
-        "y": 0
+        "y": 2
       },
       "hideTimeOverride": true,
       "id": 52,
@@ -296,7 +362,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -357,7 +423,7 @@
         "h": 4,
         "w": 3,
         "x": 15,
-        "y": 0
+        "y": 2
       },
       "id": 1,
       "options": {
@@ -378,7 +444,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -435,7 +501,7 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 0
+        "y": 2
       },
       "id": 3,
       "options": {
@@ -462,7 +528,7 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -534,7 +600,7 @@
         "h": 2,
         "w": 12,
         "x": 0,
-        "y": 4
+        "y": 6
       },
       "id": 49,
       "options": {
@@ -554,7 +620,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -598,7 +664,7 @@
         "h": 2,
         "w": 12,
         "x": 12,
-        "y": 4
+        "y": 6
       },
       "id": 50,
       "options": {
@@ -618,7 +684,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -767,7 +833,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 8
       },
       "id": 7,
       "options": {
@@ -791,7 +857,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -964,7 +1030,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 6
+        "y": 8
       },
       "id": 34,
       "options": {
@@ -988,7 +1054,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -1065,7 +1131,7 @@
         "h": 3,
         "w": 12,
         "x": 0,
-        "y": 16
+        "y": 18
       },
       "id": 44,
       "options": {
@@ -1093,7 +1159,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -1166,7 +1232,7 @@
         "h": 3,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 18
       },
       "id": 45,
       "options": {
@@ -1194,7 +1260,7 @@
         "text": {},
         "valueMode": "color"
       },
-      "pluginVersion": "12.0.0",
+      "pluginVersion": "12.0.1",
       "targets": [
         {
           "datasource": {
@@ -1244,7 +1310,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 21
       },
       "id": 51,
       "panels": [
@@ -2082,7 +2148,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 22
       },
       "id": 57,
       "panels": [
@@ -2172,7 +2238,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 23
       },
       "id": 37,
       "panels": [
