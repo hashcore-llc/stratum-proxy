@@ -66,6 +66,6 @@ scrape_configs:
     scrape_interval: 5s
     metrics_path: /api/metrics
     static_configs:
-      - targets: ['stratum-proxy:4050']
+      - targets: ['stratum-proxy:5010']
         labels:
           instance: 'stratum-proxy'

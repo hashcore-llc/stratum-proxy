@@ -24,7 +24,7 @@
 4. Перейдите в папку `farm-proxy-package`
 5. ⚠ В случае Windows: в разделе volume файла docker-compose.yml заменить `./configs` на `.\configs`
 6. Выполните команду `docker compose up -d`
-7. Перейдите в браузере по адресу `http://localhost:3000`
+7. Перейдите в браузере по адресу `http://localhost:5000`
 
 ---
 ## Как запустить
@@ -41,7 +41,7 @@ docker compose up -d
     ```yaml
     log_level: info
     mining_algorithm: sha256d
-    bind_api_addr: 0.0.0.0:4050
+    bind_api_addr: 0.0.0.0:5010
     log_dir: "./configs/log"
     ```
 
