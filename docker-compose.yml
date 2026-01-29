@@ -89,7 +89,7 @@ services:
     env_file:
       - ./monitoring/grafana/config.monitoring
     ports:
-      - 3000:3000
+      - 5000:3000
     depends_on:
       - prometheus
       - stratum-proxy
@@ -104,7 +104,7 @@ services:
     volumes:
       - proxy_configs:/opt/stratum-proxy/configs
     ports:
-      - "4050:4050"
+      - "5010:5010"
     networks:
       - hashcore-proxy
 
@@ -114,7 +114,7 @@ services:
     container_name: hashcore-proxy-configurator
     restart: always
     ports:
-      - "6034:6034"
+      - "5001:5001"
     volumes:
       - proxy_configs:/opt/config_agent/configs
       - ./docker-compose.yml:/opt/config_agent/docker-compose.yml

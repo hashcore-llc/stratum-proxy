@@ -1,26 +1,59 @@
+# Logging level: trace / debug / info / warn / error
 log_level: info
-api_port: 4050
+
+# API port for metrics and management
+api_port: 5010
+
+# Directory for log files
 log_dir: "./configs/log"
+
+# Telemetry settings (null to disable)
+telemetry: null
+
+# TCP settings for upstream pool connections
+upstream_tcp_settings:
+  keep_alive:
+    idle_time:
+      secs: 15                          # Seconds before sending keepalive probes
+      nanos: 0
+    interval:
+      secs: 5                           # Interval between keepalive probes
+      nanos: 0
+    retries: 3                          # Number of keepalive retries before disconnect
+  user_timeout: 29s                     # TCP user timeout
+
+# Mining ports configuration
 ports:
-  - bind_port: 3333               # Mining port
-    name: "via-btc"               # Name for grafana
-    submission_rate: 0.2          # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
-    aggregation: 255              # Number of connected miners per connection to the pool (default 255, range from 1 to 256)
-    mining_algorithm: sha256d     # Selected port algorithm (sha256d / scrypt)
-    tls: true                     # enable tls connection with pools
-    pools:
-      - url: btc.viabtc.io:3333   # Stratum URL
-        user: login1              # Pools login (mining name)
-        pass: x                   # Password (123 or x)
-      - url: btc.viabtc.io:443    # Stratum URL
-        user: login1              # Pools login (mining name)
-        pass: x                   # Password (123 or x)
-  - bind_port: 3334               # Mining port
-    name: "via-ltc"               # Name for grafana
-    submission_rate: 0.2          # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
-    aggregation: 255              # Number of connected miners per connection to the pool (default 255, range from 1 to 256)
-    mining_algorithm: scrypt      # Selected port algorithm (sha256d / scrypt)
-    pools:
-      - url: ltc.viabtc.io:3333   # Stratum URL
-        user: login1              # Pools login (mining name)
-        pass: 123                 # Password (123 or x)
+  - bind_port: 3333                     # Mining port
+    name: "via-btc"                     # Name for grafana
+    active: true                        # Enable/disable this port
+    submission_rate: 0.2                # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
+    aggregation: 255                    # Number of connected miners per connection to the pool (default 255, range from 1 to 256)
+    mining_algorithm: sha256d           # Selected port algorithm (sha256d / scrypt)
+    pool_groups:
+      - group: Default balance group    # Group name for load balancing
+        weight: 1.0                     # Weight for this group (0.0 - 1.0)
+        pools:
+          - url: btc.viabtc.io:3333     # Stratum URL
+            user: login1                # Pools login (mining name)
+            pass: x                     # Password (123 or x)
+            tls: true                   # Enable TLS connection with pool
+          - url: btc.viabtc.io:443      # Stratum URL (with TLS)
+            user: login1                # Pools login (mining name)
+            pass: x                     # Password (123 or x)
+            tls: false                   # Enable TLS connection with pool
+
+  - bind_port: 3334                     # Mining port
+    name: "via-ltc"                     # Name for grafana
+    active: true                        # Enable/disable this port
+    submission_rate: 0.2                # Number of shares per second. Default 0.2 (1 share / 5 seconds = 0.2)
+    aggregation: 255                    # Number of connected miners per connection to the pool (default 255, range from 1 to 256)
+    mining_algorithm: scrypt            # Selected port algorithm (sha256d / scrypt)
+    pool_groups:
+      - group: Default balance group    # Group name for load balancing
+        weight: 1.0                     # Weight for this group (0.0 - 1.0)
+        pools:
+          - url: ltc.viabtc.io:3333     # Stratum URL
+            user: login1                # Pools login (mining name)
+            pass: 123                   # Password (123 or x)
+            tls: true                  # Enable TLS connection with pool
